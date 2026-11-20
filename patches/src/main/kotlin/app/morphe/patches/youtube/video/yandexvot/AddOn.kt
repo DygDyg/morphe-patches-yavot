@@ -84,6 +84,11 @@ private val REQUIRED_HOST_METHODS = mapOf(
                 "Ljava/lang/Runnable;Ljava/lang/CharSequence;Ljava/lang/Runnable;Z)" +
                 "Landroid/util/Pair;",
     ),
+    // Morphe Patches 2.3.0+ only: switches must save through their Setting, not raw preferences.
+    // Class presence only: the methods of this class are instance methods, and
+    // checkHostCompatibility requires every declared method to be static.
+    "Lapp/morphe/extension/shared/settings/preference/BooleanSettingPreference;" to
+            emptySet<String>(),
 )
 
 /**
@@ -311,7 +316,9 @@ internal fun switchPreference(
     titleKey: String = "${key}_title",
     summary: Boolean = false,
 ) = Preference(
-    tag = "SwitchPreference",
+    // BooleanSettingPreference (Morphe Patches 2.3.0+) saves through the Setting instead of
+    // raw SharedPreferences, so dependent settings see the change immediately.
+    tag = "app.morphe.extension.youtube.settings.preference.YandexVotSwitchPreference",
     key = key,
     titleKey = titleKey,
     summaryKey = if (summary) "${key}_summary" else null,
