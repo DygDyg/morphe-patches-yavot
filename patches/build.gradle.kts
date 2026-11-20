@@ -13,6 +13,19 @@ patches {
     }
 }
 
+// Resolve composite-build patcher/smali as jars. Otherwise both the classes
+// directory and the jar are passed to D8 by buildAndroid, and it fails with
+// "Classpath type already present" — producing an .mpp without classes.dex
+// that Morphe Manager loads as 0 patches.
+configurations.compileClasspath {
+    attributes {
+        attribute(
+            LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE,
+            objects.named(LibraryElements.JAR),
+        )
+    }
+}
+
 // Separate configuration so gson is available at runtime for the
 // generatePatchesList task but never bundled into the APK.
 val patchListGeneratorClasspath = configurations.register("patchListGeneratorClasspath")
@@ -34,7 +47,8 @@ tasks {
     register<JavaExec>("generatePatchesList") {
         description = "Build patch with patch list"
 
-        dependsOn(build)
+        // buildAndroid emits classes.dex into the .mpp; plain `build` does not.
+        dependsOn("buildAndroid")
 
         classpath = sourceSets["main"].runtimeClasspath + patchListGeneratorClasspath.get()
         mainClass.set("app.morphe.util.PatchListGeneratorKt")

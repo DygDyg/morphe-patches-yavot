@@ -69,8 +69,12 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./gradlew :patches:build generatePatchesList --no-daemon --stacktrace
+          # buildAndroid produces classes.dex (required by Morphe Manager on Android).
+          ./gradlew :patches:buildAndroid generatePatchesList --no-daemon --stacktrace
           ls -la patches/build/libs/
+          # Fail the job if the bundle is missing dex (Manager would show 0 patches).
+          MPP=$(ls patches/build/libs/patches-*.mpp | grep -vE 'sources|javadoc' | head -n 1)
+          jar tf "$MPP" | grep -qx 'classes.dex'
 
       - name: Create or update GitHub release
         working-directory: morphe-patches-yavot
