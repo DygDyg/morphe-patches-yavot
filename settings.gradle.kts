@@ -20,7 +20,8 @@ pluginManagement {
 }
 
 plugins {
-    id("app.morphe.patches") version "1.3.4-dev.1"
+    // Match Morphe Patches v2.3.0: patcherProvided scope + D8 classes.dex for Manager.
+    id("app.morphe.patches") version "2.1.1"
 }
 
 settings {
