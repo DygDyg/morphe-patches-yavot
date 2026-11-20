@@ -11,6 +11,10 @@ on:
         description: Existing git tag to publish (for example v1.1.1)
         required: true
         default: v1.1.1
+      ref:
+        description: Git ref to build from (defaults to tag; use main to rebuild an old tag with newer build scripts)
+        required: false
+        default: ''
 
 jobs:
   publish:
@@ -19,11 +23,11 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout yavot at tag
+      - name: Checkout yavot
         uses: actions/checkout@v7
         with:
           path: morphe-patches-yavot
-          ref: ${{ inputs.tag }}
+          ref: ${{ inputs.ref != '' && inputs.ref || inputs.tag }}
           fetch-depth: 0
 
       - name: Checkout base morphe-patches
