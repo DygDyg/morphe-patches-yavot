@@ -45,8 +45,7 @@ import app.morphe.extension.shared.ui.SheetBottomDialog;
 import app.morphe.extension.youtube.patches.playback.speed.CustomPlaybackSpeedPatch;
 import app.morphe.extension.youtube.settings.YandexVotSettings;
 import app.morphe.extension.youtube.shared.PlayerType;
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 public class YandexVoiceOverTranslationBottomSheet {
@@ -147,16 +146,15 @@ public class YandexVoiceOverTranslationBottomSheet {
             currentDialog = new WeakReference<>(dialog);
 
             // Dismiss when entering PiP mode.
-            Function1<PlayerType, Unit> playerTypeObserver = new Function1<>() {
+            Consumer<PlayerType> playerTypeObserver = new Consumer<>() {
                 @Override
-                public Unit invoke(PlayerType type) {
+                public void accept(PlayerType type) {
                     SheetBottomDialog.SlideDialog current = currentDialog.get();
                     if (current == null || !current.isShowing()) {
                         PlayerType.getOnChange().removeObserver(this);
                     } else if (type == PlayerType.WATCH_WHILE_PICTURE_IN_PICTURE) {
                         current.dismiss();
                     }
-                    return Unit.INSTANCE;
                 }
             };
             PlayerType.getOnChange().addObserver(playerTypeObserver);
