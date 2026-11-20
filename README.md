@@ -91,7 +91,7 @@ Base bundle: [Morphe Patches](https://github.com/MorpheApp/morphe-patches), [Mor
 ## Patches
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.2](https://github.com/DygDyg/morphe-patches-yavot/releases/tag/v1.1.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
+> **[v1.1.3](https://github.com/DygDyg/morphe-patches-yavot/releases/tag/v1.1.3)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
 <details open>
 <summary>📦 YouTube&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>

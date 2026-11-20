@@ -1,3 +1,11 @@
+## [1.1.3](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.2...v1.1.3) (2026-11-20)
+
+### 🐛 Bug Fixes
+
+* Align patches plugin and deps with Morphe 2.3.0 for classes.dex ([df9d636](https://github.com/DygDyg/morphe-patches-yavot/commit/df9d636a82f5f42eb53a5c27c9cf74368317ad04))
+* Build mpp without composite patcher to emit classes.dex ([f387382](https://github.com/DygDyg/morphe-patches-yavot/commit/f3873829c6f564654d4ca340d91ea3ff341e15f5))
+* Emit classes.dex so Manager lists Yandex VoT patches ([7f7289b](https://github.com/DygDyg/morphe-patches-yavot/commit/7f7289b9f59654405782e786d2f7c2b0307ed6cb))
+
 ## [1.1.2](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.1...v1.1.2) (2026-11-20)
 
 ### 🐛 Bug Fixes
