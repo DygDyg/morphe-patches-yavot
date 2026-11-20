@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.1...v1.1.2) (2026-11-20)
+
+### 🐛 Bug Fixes
+
+* Publish the real patches mpp, not javadoc ([cff9141](https://github.com/DygDyg/morphe-patches-yavot/commit/cff9141abdc8bf219c24ded83d9487621ef1f1f0))
+
 ## [1.1.1](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.0...v1.1.1) (2026-11-20)
 
 ### 🐛 Bug Fixes
