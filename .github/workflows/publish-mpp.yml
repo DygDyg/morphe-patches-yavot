@@ -37,19 +37,10 @@ jobs:
           ref: v2.3.0
           path: morphe-patches
 
-      - name: Checkout morphe-patcher
-        uses: actions/checkout@v7
-        with:
-          repository: MorpheApp/morphe-patcher
-          ref: v2.4.0
-          path: morphe-patcher
-
-      - name: Checkout morphe-patches-library
-        uses: actions/checkout@v7
-        with:
-          repository: MorpheApp/morphe-patches-library
-          ref: v2.2.0
-          path: morphe-patches-library
+      # Do NOT place patcher/library at ../morphe-patcher relative to yavot.
+      # settings.gradle.kts would includeBuild them and D8 then fails with
+      # "Classpath type already present" (duplicate smali), yielding an .mpp
+      # without classes.dex that Manager reports as 0 patches. Use Maven pins.
 
       - name: Setup Java
         uses: actions/setup-java@v6

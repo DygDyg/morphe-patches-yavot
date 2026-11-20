@@ -29,21 +29,10 @@ jobs:
           ref: v2.3.0
           path: morphe-patches
 
-      - name: Checkout morphe-patcher
-        uses: actions/checkout@v7
-        with:
-          repository: MorpheApp/morphe-patcher
-          # Matches Morphe Patches v2.3.0.
-          ref: v2.4.0
-          path: morphe-patcher
-
-      - name: Checkout morphe-patches-library
-        uses: actions/checkout@v7
-        with:
-          repository: MorpheApp/morphe-patches-library
-          # Match the host API used to compile this add-on.
-          ref: v2.2.0
-          path: morphe-patches-library
+      # Avoid composite includeBuild of patcher/library (../morphe-*).
+      # With those checkouts D8 hits duplicate smali and buildAndroid fails,
+      # so releases never get a classes.dex that Manager can load.
+      # Dependency versions come from gradle/libs.versions.toml (Maven).
 
       - name: Setup Java
         uses: actions/setup-java@v6
