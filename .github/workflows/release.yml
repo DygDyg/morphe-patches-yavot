@@ -24,7 +24,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: MorpheApp/morphe-patches
-          ref: dev
+          # Pin to a released host API this add-on compiles against.
+          # Building against Morphe Patches `dev` breaks when host methods move.
+          ref: v2.3.0
           path: morphe-patches
 
       - name: Checkout morphe-patcher
