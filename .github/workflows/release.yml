@@ -33,13 +33,16 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: MorpheApp/morphe-patcher
+          # Matches Morphe Patches v2.3.0.
+          ref: v2.4.0
           path: morphe-patcher
 
       - name: Checkout morphe-patches-library
         uses: actions/checkout@v7
         with:
           repository: MorpheApp/morphe-patches-library
-          ref: dev
+          # Match the host API used to compile this add-on.
+          ref: v2.2.0
           path: morphe-patches-library
 
       - name: Setup Java
