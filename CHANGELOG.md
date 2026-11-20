@@ -1,3 +1,12 @@
+## [1.1.1-dev.1](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.0...v1.1.1-dev.1) (2026-11-20)
+
+### 🐛 Bug Fixes
+
+* Align release build pins and getReference import ([b9b5606](https://github.com/DygDyg/morphe-patches-yavot/commit/b9b560605ea7cca68e354d9cd9548d49a13085a2))
+* Build releases against Morphe Patches v2.3.0 ([d540793](https://github.com/DygDyg/morphe-patches-yavot/commit/d540793ad981acac8e2199939756646eb51f5b07))
+* Save Yandex VoT switches through their settings ([df93956](https://github.com/DygDyg/morphe-patches-yavot/commit/df93956bcbd188a2c9cd2ab136358815acc41c82))
+* Use Consumer for PlayerType observer on Morphe 2.3.0 ([87b5047](https://github.com/DygDyg/morphe-patches-yavot/commit/87b5047f0ac5741cabcf2be925fea5808bdac220))
+
 ## [1.1.0](https://github.com/MarcaDian/morphe-patches-yavot/compare/v1.0.4...v1.1.0) (2026-08-22)
 
 ### 🐛 Bug Fixes
