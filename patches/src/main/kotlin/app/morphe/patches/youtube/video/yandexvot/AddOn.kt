@@ -62,6 +62,10 @@ private val REQUIRED_HOST_METHODS = mapOf(
         "addButton(Landroid/view/View;Landroid/widget/ImageView;Ljava/lang/String;" +
                 $$"Landroid/view/View$OnClickListener;Landroid/view/View$OnLongClickListener;)" +
                 "Landroid/widget/ImageView;",
+        "setToggleAccessibilityDelegate(Landroid/view/View;Ljava/util/function/BooleanSupplier;)V",
+    ),
+    "Lapp/morphe/extension/youtube/videoplayer/PlayerIcons;" to setOf(
+        "name(Ljava/lang/String;)Ljava/lang/String;",
     ),
     "Lapp/morphe/extension/youtube/videoplayer/LegacyPlayerControlButton;" to setOf(
         "getDialogBackgroundColor()I",

@@ -67,8 +67,9 @@ import androidx.annotation.Nullable;
 import java.lang.ref.WeakReference;
 
 import app.morphe.extension.shared.Logger;
-import app.morphe.extension.youtube.addon.AddOnApi;
+import app.morphe.extension.shared.ResourceUtils;
 import app.morphe.extension.shared.Utils;
+import app.morphe.extension.youtube.addon.AddOnApi;
 import app.morphe.extension.youtube.patches.yandexvot.YandexVoiceOverTranslationPatch;
 import app.morphe.extension.youtube.patches.yandexvot.YandexVoiceOverTranslationBottomSheet;
 import app.morphe.extension.youtube.patches.yandexvot.YandexVotAddOn;
@@ -98,12 +99,11 @@ public final class YandexVotButton {
             if (RESTORE_OLD_PLAYER_BUTTONS || !YandexVotSettings.YANDEX_VOT_ENABLED.get()) return;
             YandexVoiceOverTranslationPatch.addOnTranslationStateChangeCallback(STATE_REFRESH_CALLBACK);
 
-            // The add-on listener runs before the remaining overlay hooks of the base bundle,
-            // so posting the button keeps it behind the buttons Morphe itself adds and gives
-            // this one the outermost custom slot. PlayerOverlayButton still owns the spacing,
-            // geometry and visibility, which is why no layout params are set here: copying them
-            // would break as soon as YouTube recreates its controls.
-            controlsView.post(() -> addOverlayButton(controlsView));
+            // Add immediately like the built-in VoT button. Posting used to push this add-on
+            // into the outermost (leftmost) slot; after Morphe 2.4.0 (Ghost mode, mute slot)
+            // that slot often lands off-screen. Registering first keeps the button next to
+            // fullscreen. PlayerOverlayButton still owns spacing, geometry and visibility.
+            addOverlayButton(controlsView);
         } catch (Exception ex) {
             Logger.printException(() -> "YandexVotButton initializeButton failure", ex);
         }
@@ -114,7 +114,7 @@ public final class YandexVotButton {
             YandexCountdownButton button = PlayerOverlayButton.addButton(
                     controlsView,
                     new YandexCountdownButton(controlsView.getContext()),
-                    "morphe_yt_yandex_vot_bold",
+                    PlayerIcons.name("morphe_yt_yandex_vot"),
                     view -> {
                         YandexVoiceOverTranslationPatch.toggleTranslation();
                         refreshActivatedState();
@@ -125,6 +125,11 @@ public final class YandexVotButton {
                     });
             overlayButtonRef = button != null ? new WeakReference<>(button) : null;
             if (button != null) {
+                button.setContentDescription(
+                        ResourceUtils.getString("morphe_yandex_vot_screen_title"));
+                PlayerOverlayButton.setToggleAccessibilityDelegate(
+                        button,
+                        YandexVoiceOverTranslationPatch::isTranslationActive);
                 button.post(STATE_REFRESH_CALLBACK);
             }
             refreshActivatedState();
