@@ -12,7 +12,8 @@ import app.morphe.extension.shared.settings.preference.SeekBarPreference.SeekBar
 
 public final class YandexVotSettings {
     public static final BooleanSetting YANDEX_VOT_ENABLED =
-            new BooleanSetting("morphe_yandex_vot_enabled", FALSE);
+            // Default on so the player button appears after a fresh install/repatch.
+            new BooleanSetting("morphe_yandex_vot_enabled", TRUE);
     public static final StringSetting YANDEX_VOT_TIMER_POSITION =
             new StringSetting("morphe_yandex_vot_timer_position", "inside", false, parent(YANDEX_VOT_ENABLED));
     public static final BooleanSetting YANDEX_VOT_PROGRESS_RING_ENABLED =

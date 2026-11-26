@@ -66,6 +66,7 @@ private val REQUIRED_HOST_METHODS = mapOf(
     ),
     "Lapp/morphe/extension/youtube/videoplayer/PlayerIcons;" to setOf(
         "name(Ljava/lang/String;)Ljava/lang/String;",
+        "exists(Ljava/lang/String;)Z",
     ),
     "Lapp/morphe/extension/youtube/videoplayer/LegacyPlayerControlButton;" to setOf(
         "getDialogBackgroundColor()I",

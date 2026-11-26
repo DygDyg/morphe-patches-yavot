@@ -99,11 +99,11 @@ public final class YandexVotButton {
             if (RESTORE_OLD_PLAYER_BUTTONS || !YandexVotSettings.YANDEX_VOT_ENABLED.get()) return;
             YandexVoiceOverTranslationPatch.addOnTranslationStateChangeCallback(STATE_REFRESH_CALLBACK);
 
-            // Add immediately like the built-in VoT button. Posting used to push this add-on
-            // into the outermost (leftmost) slot; after Morphe 2.4.0 (Ghost mode, mute slot)
-            // that slot often lands off-screen. Registering first keeps the button next to
-            // fullscreen. PlayerOverlayButton still owns spacing, geometry and visibility.
-            addOverlayButton(controlsView);
+            // Add-on overlay listeners run before Morphe finishes wiring the fullscreen anchor.
+            // Post so PlayerOverlayButton.addButton can resolve the parent; without post the
+            // call returns null. Posting also puts this button in the outermost (leftmost)
+            // slot after Ghost mode / mute in Morphe 2.4.0 — clampOnScreen keeps it visible.
+            controlsView.post(() -> addOverlayButton(controlsView));
         } catch (Exception ex) {
             Logger.printException(() -> "YandexVotButton initializeButton failure", ex);
         }
@@ -111,10 +111,16 @@ public final class YandexVotButton {
 
     private static void addOverlayButton(View controlsView) {
         try {
+            // Prefer styled name when the variant exists; fall back to bundled bold icon.
+            String drawableName = PlayerIcons.name("morphe_yt_yandex_vot");
+            if (!PlayerIcons.exists(drawableName)) {
+                drawableName = "morphe_yt_yandex_vot_bold";
+            }
+
             YandexCountdownButton button = PlayerOverlayButton.addButton(
                     controlsView,
                     new YandexCountdownButton(controlsView.getContext()),
-                    PlayerIcons.name("morphe_yt_yandex_vot"),
+                    drawableName,
                     view -> {
                         YandexVoiceOverTranslationPatch.toggleTranslation();
                         refreshActivatedState();
@@ -130,11 +136,29 @@ public final class YandexVotButton {
                 PlayerOverlayButton.setToggleAccessibilityDelegate(
                         button,
                         YandexVoiceOverTranslationPatch::isTranslationActive);
+                // Run after PlayerOverlayButtonController's pre-draw so we can clamp X.
+                button.getViewTreeObserver().addOnPreDrawListener(() -> {
+                    clampOverlayButtonOnScreen(button);
+                    return true;
+                });
                 button.post(STATE_REFRESH_CALLBACK);
             }
             refreshActivatedState();
         } catch (Exception ex) {
             Logger.printException(() -> "YandexVotButton addOverlayButton failure", ex);
+        }
+    }
+
+    /**
+     * Morphe packs overlay buttons leftward from fullscreen/mute. With many buttons (2.4.0+)
+     * the outermost add-on slot can get a negative X and disappear off the left edge —
+     * especially on tablets. Keep the button inside its parent.
+     */
+    private static void clampOverlayButtonOnScreen(View button) {
+        if (button.getParent() == null) return;
+        float x = button.getX();
+        if (x < 0f) {
+            button.setX(0f);
         }
     }
 
