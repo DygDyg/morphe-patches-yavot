@@ -1,3 +1,9 @@
+## [1.1.6](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.5...v1.1.6) (2026-11-26)
+
+### 🐛 Bug Fixes
+
+* Register the Yandex VoT add-on on Morphe 2.4.0. The host removed `CustomPlaybackSpeedPatch.getAdjustedBackgroundColor`, which failed the patch's finalize block, so the player button was never registered.
+
 ## [1.1.5](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.4...v1.1.5) (2026-11-26)
 
 ### 🐛 Bug Fixes

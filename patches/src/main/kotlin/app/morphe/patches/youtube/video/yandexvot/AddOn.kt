@@ -71,8 +71,12 @@ private val REQUIRED_HOST_METHODS = mapOf(
     "Lapp/morphe/extension/youtube/videoplayer/LegacyPlayerControlButton;" to setOf(
         "getDialogBackgroundColor()I",
     ),
-    "Lapp/morphe/extension/youtube/patches/playback/speed/CustomPlaybackSpeedPatch;" to setOf(
-        "getAdjustedBackgroundColor(Z)I",
+    // Morphe 2.4.0 removed CustomPlaybackSpeedPatch.getAdjustedBackgroundColor(Z)I.
+    // Requiring it made checkHostCompatibility fail the finalize block, so the add-on
+    // registration call was never injected. The color is now derived locally from
+    // LegacyPlayerControlButton.getDialogBackgroundColor and Utils.adjustColorBrightness.
+    "Lapp/morphe/extension/shared/Utils;" to setOf(
+        "adjustColorBrightness(IFF)I",
     ),
     "Lapp/morphe/extension/shared/theme/ThemeUtils;" to setOf(
         "getAppForegroundColor()I",

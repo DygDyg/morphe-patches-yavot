@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-11-26T11:08:16",
-  "description": "## [1.1.5](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.4...v1.1.5) (2026-11-26)\n\n### 🐛 Bug Fixes\n\n* Keep Yandex VoT button on-screen and enable it by default ([a184d24](https://github.com/DygDyg/morphe-patches-yavot/commit/a184d24cb86cc29465d808f505e33252133b3a00))",
-  "download_url": "https://github.com/DygDyg/morphe-patches-yavot/releases/download/v1.1.5/patches-1.1.5.mpp",
+  "created_at": "2026-11-26T15:20:00",
+  "description": "## [1.1.6](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.5...v1.1.6) (2026-11-26)\n\n### 🐛 Bug Fixes\n\n* Register the Yandex VoT add-on on Morphe 2.4.0. The host removed `CustomPlaybackSpeedPatch.getAdjustedBackgroundColor`, which failed the patch's finalize block, so the player button was never registered.",
+  "download_url": "https://github.com/DygDyg/morphe-patches-yavot/releases/download/v1.1.6/patches-1.1.6.mpp",
   "signature_download_url": "",
-  "version": "1.1.5"
+  "version": "1.1.6"
 }

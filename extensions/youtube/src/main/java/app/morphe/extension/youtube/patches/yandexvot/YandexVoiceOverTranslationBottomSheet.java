@@ -36,13 +36,13 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 
 import app.morphe.extension.shared.Logger;
+import app.morphe.extension.shared.Utils;
 import app.morphe.extension.shared.settings.IntegerSetting;
 import app.morphe.extension.shared.settings.preference.SeekBarPreference;
 import app.morphe.extension.shared.settings.preference.SeekBarPreference.SeekBarConfig;
 import app.morphe.extension.shared.theme.ThemeUtils;
 import app.morphe.extension.shared.ui.Dim;
 import app.morphe.extension.shared.ui.SheetBottomDialog;
-import app.morphe.extension.youtube.patches.playback.speed.CustomPlaybackSpeedPatch;
 import app.morphe.extension.youtube.settings.YandexVotSettings;
 import app.morphe.extension.youtube.shared.PlayerType;
 import java.util.function.Consumer;
@@ -319,6 +319,23 @@ public class YandexVoiceOverTranslationBottomSheet {
     }
 
     /**
+     * Background color adjusted to the current theme for visual contrast, matching what
+     * {@code CustomPlaybackSpeedPatch} does in Morphe 2.4.0: lightened for dark themes,
+     * darkened by 5% for light themes.
+     *
+     * <p>Morphe 2.4.0 removed {@code CustomPlaybackSpeedPatch.getAdjustedBackgroundColor}.
+     * Calling it made {@code checkHostCompatibility} fail the patch's finalize block, so the
+     * add-on was never registered and the player button never appeared.
+     */
+    private static int adjustedBackgroundColor(boolean pressed) {
+        int base = getDialogBackgroundColor();
+        if (pressed) {
+            return Utils.adjustColorBrightness(base, 0.95f, 1.115f);
+        }
+        return Utils.adjustColorBrightness(base, 0.95f, 1.0f);
+    }
+
+    /**
      * Creates a +/- button styled like the reference implementation.
      */
     private static Button createMinusPlusButton(Context context, boolean isPlus) {
@@ -330,7 +347,7 @@ public class YandexVoiceOverTranslationBottomSheet {
         button.setGravity(Gravity.CENTER);
         ShapeDrawable background = new ShapeDrawable(new RoundRectShape(
                 Dim.roundedCorners(20), null, null));
-        background.getPaint().setColor(CustomPlaybackSpeedPatch.getAdjustedBackgroundColor(false));
+        background.getPaint().setColor(adjustedBackgroundColor(false));
         button.setBackground(background);
         final int size = Dim.dp36;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
@@ -374,8 +391,8 @@ public class YandexVoiceOverTranslationBottomSheet {
 
         Runnable updateSelection = () -> {
             boolean useLive = YandexVotSettings.YANDEX_VOT_USE_LIVE_VOICES.get();
-            int selectedColor = CustomPlaybackSpeedPatch.getAdjustedBackgroundColor(true);
-            int unselectedColor = CustomPlaybackSpeedPatch.getAdjustedBackgroundColor(false);
+            int selectedColor = adjustedBackgroundColor(true);
+            int unselectedColor = adjustedBackgroundColor(false);
             ShapeDrawable standardBg = (ShapeDrawable) standardButton.getBackground();
             ShapeDrawable liveBg = (ShapeDrawable) liveButton.getBackground();
             standardBg.getPaint().setColor(useLive ? unselectedColor : selectedColor);
@@ -424,7 +441,7 @@ public class YandexVoiceOverTranslationBottomSheet {
 
         ShapeDrawable background = new ShapeDrawable(new RoundRectShape(
                 Dim.roundedCorners(12), null, null));
-        background.getPaint().setColor(CustomPlaybackSpeedPatch.getAdjustedBackgroundColor(false));
+        background.getPaint().setColor(adjustedBackgroundColor(false));
         button.setBackground(background);
         button.setPadding(Dim.dp12, Dim.dp8, Dim.dp12, Dim.dp8);
         return button;
@@ -448,7 +465,7 @@ public class YandexVoiceOverTranslationBottomSheet {
         android.graphics.drawable.StateListDrawable bg = new android.graphics.drawable.StateListDrawable();
         bg.addState(new int[]{android.R.attr.state_pressed},
                 new android.graphics.drawable.ColorDrawable(
-                        CustomPlaybackSpeedPatch.getAdjustedBackgroundColor(true)));
+                        adjustedBackgroundColor(true)));
         bg.addState(new int[]{}, new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
         row.setBackground(bg);
 
