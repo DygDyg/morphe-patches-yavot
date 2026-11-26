@@ -1,3 +1,9 @@
+## [1.1.5](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.4...v1.1.5) (2026-11-26)
+
+### 🐛 Bug Fixes
+
+* Keep Yandex VoT button on-screen and enable it by default ([a184d24](https://github.com/DygDyg/morphe-patches-yavot/commit/a184d24cb86cc29465d808f505e33252133b3a00))
+
 ## [1.1.4](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.3...v1.1.4) (2026-11-26)
 
 ### 🐛 Bug Fixes
