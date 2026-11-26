@@ -1,3 +1,9 @@
+## [1.1.4](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.3...v1.1.4) (2026-11-26)
+
+### 🐛 Bug Fixes
+
+* Keep Yandex VoT player button on-screen with Morphe 2.4.0 ([5a2e5a7](https://github.com/DygDyg/morphe-patches-yavot/commit/5a2e5a78e22da8ad47ef2ac9ca5dde91659c24d8))
+
 ## [1.1.3](https://github.com/DygDyg/morphe-patches-yavot/compare/v1.1.2...v1.1.3) (2026-11-20)
 
 ### 🐛 Bug Fixes
